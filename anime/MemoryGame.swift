@@ -10,8 +10,8 @@ import Foundation
 
 // Model
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: Array<Card>
-    var indexOfTheOneAndOnlyFaceUpCard: Int? {
+    private(set) var cards: Array<Card>
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
             cards.indices.filter { cards[$0].isFaceUp}.only
 //            let faceUpCardIndices = cards.indices.filter { (index) -> Bool in
