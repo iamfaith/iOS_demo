@@ -19,7 +19,8 @@ struct ContentView: View {
     @State var image: Image? = nil
     @State var videoURL: URL? = nil
     @State var showCaptureImageView: Bool = false
-    //    @State var text: String = ""
+    @State var text: String = "wait for converting"
+    //    let videoProcessingQueue = DispatchQueue(label: "video-processing")
     var body: some View {
         
         //        let player = AVPlayer(url: URL(fileURLWithPath: path))
@@ -70,6 +71,8 @@ struct ContentView: View {
         
         ZStack {
             VStack {
+                Text(self.text).padding()
+                
                 Button(action: {
                     self.showCaptureImageView.toggle()
                 }) {
@@ -81,7 +84,7 @@ struct ContentView: View {
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10)
-                Text("videoURL:\(String(describing: videoURL))")
+                Text("videoURL:\(String(describing: videoURL))").padding()
                 
                 Button(action: {
                     
@@ -97,34 +100,67 @@ struct ContentView: View {
                     //                    }
                     
                     if (self.videoURL != nil) {
-                        self.convertVideo(source: self.videoURL!)
+                        //debugPrint("begin")
+                        self.text = "Converting!......"
+                        DispatchQueue.global(qos: .background).async {
+                            //debugPrint("before convert---")
+                            let dir = self.convertVideo(source: self.videoURL!)
+                            DispatchQueue.main.async {
+                                //debugPrint("update ui---")
+                                var filesToShare = [Any]()
+                                filesToShare.append(dir)
+                                let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+                                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                                self.text = "Converted!!Pls Save"
+                                
+                            }
+                            
+                        }
+                        
+                        //                        let group = DispatchGroup()
+                        //                        group.enter()
+                        //                        var dir: URL? = nil
+                        //
+                        //
+                        //                        DispatchQueue.main.async {
+                        //
+                        //                            debugPrint("convertVideo +++")
+                        //                            dir = self.convertVideo(source: self.videoURL!)
+                        //                            group.leave()
+                        //                             debugPrint("convertVideo ---")
+                        //                        }
+                        //
+                        //                        // does not wait. But the code in notify() gets run
+                        //                        // after enter() and leave() calls are balanced
+                        //                        group.notify(queue: .main) {
+                        //                            var filesToShare = [Any]()
+                        //                            filesToShare.append(dir!)
+                        //                            let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+                        //                            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                        //                            self.text = "Converted!!Pls Save"
+                        //
+                        //
+                        //debugPrint("end")
+                        //                        }
+                        //
+                        //                        debugPrint("after")
+                        //                        self.text = "Converting!......"
                     }
                 }) {
                     Text("Slow Motion")
-                    
                 }
-                //TextView(text: $text)
+                
             }
             if (showCaptureImageView) {
                 CaptureImageView(isShown: $showCaptureImageView, image: $image, videoURL: $videoURL)
             }
             
-            
             //            PlayerView()
-        }
-        
-        
-        //        return ZStack {
-        ////            Text(self.path)
-        //            PlayerView()
-        ////            Text("hehe")
-        ////            Text("\(self.outputDir)quick.mp4")
-        //        }
-        
+        }      
         
     }
     
-    func convertVideo(source: URL)  {
+    func convertVideo(source: URL) -> URL {
         let file = "quick.MOV"
         let dir = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(file)
         
@@ -132,10 +168,12 @@ struct ContentView: View {
         
         MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
         
-        var filesToShare = [Any]()
-        filesToShare.append(dir!)
-        let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
-        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+        
+        return dir!
+        //        var filesToShare = [Any]()
+        //        filesToShare.append(dir!)
+        //        let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+        //        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
     }
     
     
