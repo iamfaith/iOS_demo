@@ -13,9 +13,10 @@ struct CaptureImageView {
     /// MARK: - Properties
     @Binding var isShown: Bool
     @Binding var image: Image?
+    @Binding var videoURL: URL?
     
     func makeCoordinator() -> Coordinator {
-      return Coordinator(isShown: $isShown, image: $image)
+        return Coordinator(isShown: $isShown, image: $image, videoURL: $videoURL)
     }
 }
 
@@ -23,7 +24,14 @@ struct CaptureImageView {
 extension CaptureImageView: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<CaptureImageView>) -> UIImagePickerController {
         let picker = UIImagePickerController()
+        picker.sourceType = .savedPhotosAlbum
         picker.delegate = context.coordinator
+        picker.mediaTypes = ["public.movie"]
+            //["public.image", "public.movie"]
+        
+        if #available(iOS 11.0, *) {
+            picker.videoExportPreset = "AVAssetExportPresetPassthrough"
+        }
         return picker
     }
     

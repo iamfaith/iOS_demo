@@ -17,7 +17,9 @@ func getDocumentsDirectory() -> URL {
 struct ContentView: View {
     
     @State var image: Image? = nil
+    @State var videoURL: URL? = nil
     @State var showCaptureImageView: Bool = false
+    //    @State var text: String = ""
     var body: some View {
         
         //        let player = AVPlayer(url: URL(fileURLWithPath: path))
@@ -62,27 +64,53 @@ struct ContentView: View {
         //                }
         
         
-//        Button(action: wirtieFile) {
-//            Image(systemName: "square.and.arrow.up")
-//        }
+        //        Button(action: wirtieFile) {
+        //            Image(systemName: "square.and.arrow.up")
+        //        }
         
         ZStack {
             VStack {
                 Button(action: {
-                  self.showCaptureImageView.toggle()
+                    self.showCaptureImageView.toggle()
                 }) {
-                    Text("Choose photos")
+                    Text("Choose videos")
                 }
+                
                 image?.resizable()
-                  .frame(width: 250, height: 250)
-                  .clipShape(Circle())
-                  .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                  .shadow(radius: 10)
+                    .frame(width: 250, height: 250)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                    .shadow(radius: 10)
+                Text("videoURL:\(String(describing: videoURL))")
+                
+                Button(action: {
+                    
+                    //                    do {
+                    //                        let fileList = try FileManager.default.contentsOfDirectory(at: getDocumentsDirectory(), includingPropertiesForKeys: nil)
+                    //                        debugPrint(fileList)
+                    //
+                    //
+                    //                        let text = try String(contentsOf: getDocumentsDirectory().appendingPathComponent("message.txt"), encoding: .utf8)
+                    //                        debugPrint(text)
+                    //                    } catch {
+                    //                        print("Error while enumerating files")
+                    //                    }
+                    
+                    if (self.videoURL != nil) {
+                        self.convertVideo(source: self.videoURL!)
+                    }
+                }) {
+                    Text("Slow Motion")
+                    
+                }
+                //TextView(text: $text)
             }
             if (showCaptureImageView) {
-              CaptureImageView(isShown: $showCaptureImageView, image: $image)
+                CaptureImageView(isShown: $showCaptureImageView, image: $image, videoURL: $videoURL)
             }
-            PlayerView()
+            
+            
+            //            PlayerView()
         }
         
         
@@ -96,30 +124,40 @@ struct ContentView: View {
         
     }
     
-    func wirtieFile() -> Void{
-        guard let path = Bundle.main.path(forResource: "slow", ofType:"MOV") else {
-            debugPrint("video.m4v not found")
-            return
-        }
+    func convertVideo(source: URL)  {
         let file = "quick.MOV"
         let dir = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(file)
-        //    MobileFFmpeg.execute("-i \(path) -codec copy \(outputDir)/quick2.mp4")
         
-        MobileFFmpeg.execute("-i \(path) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
-//        MobileFFmpeg.execute("-i \(path) -codec copy -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
+        //        MobileFFmpeg.execute("-i \(source) -codec copy -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
         
-       
-//        let contents = "test..."
-//        do {
-//            try contents.write(to: dir!, atomically: true, encoding: .utf8)
-//        } catch {
-//            print(error.localizedDescription)
-//        }
+        MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
+        
         var filesToShare = [Any]()
         filesToShare.append(dir!)
         let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
     }
+    
+    
+    //    func wirtieFile() -> Void{
+    //        guard let path = Bundle.main.path(forResource: "slow", ofType:"MOV") else {
+    //            debugPrint("video.m4v not found")
+    //            return
+    //        }
+    //        let file = "quick.MOV"
+    //        let dir = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(file)
+    //
+    //        //        let contents = "test..."
+    //        //        do {
+    //        //            try contents.write(to: dir!, atomically: true, encoding: .utf8)
+    //        //        } catch {
+    //        //            print(error.localizedDescription)
+    //        //        }
+    //        var filesToShare = [Any]()
+    //        filesToShare.append(dir!)
+    //        let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+    //        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+    //    }
 }
 
 
