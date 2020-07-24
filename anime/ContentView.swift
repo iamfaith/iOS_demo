@@ -20,6 +20,8 @@ struct ContentView: View {
     @State var videoURL: URL? = nil
     @State var showCaptureImageView: Bool = false
     @State var text: String = "wait for converting"
+    @State var showShareVideo: Bool = false
+    @State var videos = [Any]()
     //    let videoProcessingQueue = DispatchQueue(label: "video-processing")
     var body: some View {
         
@@ -107,10 +109,15 @@ struct ContentView: View {
                             let dir = self.convertVideo(source: self.videoURL!)
                             DispatchQueue.main.async {
                                 //debugPrint("update ui---")
-                                var filesToShare = [Any]()
-                                filesToShare.append(dir)
-                                let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
-                                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                                
+                                //                                var filesToShare = [Any]()
+                                //                                filesToShare.append(dir)
+                                self.videos.removeAll()
+                                self.videos.append(dir)
+                                //                                let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+                                //                                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+                                
+                                self.showShareVideo = true
                                 self.text = "Converted!!Pls Save"
                                 
                             }
@@ -156,7 +163,9 @@ struct ContentView: View {
             }
             
             //            PlayerView()
-        }      
+        }.sheet(isPresented: $showShareVideo) {
+            ShareSheet(activityItems: self.videos)
+        }
         
     }
     
@@ -164,7 +173,7 @@ struct ContentView: View {
         let file = "quick.MOV"
         let dir = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(file)
         
-        //        MobileFFmpeg.execute("-i \(source) -codec copy -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
+//        MobileFFmpeg.execute("-i \(source) -codec copy -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
         
         MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -y \(NSURL(fileURLWithPath: NSTemporaryDirectory()))\(file)")
         
