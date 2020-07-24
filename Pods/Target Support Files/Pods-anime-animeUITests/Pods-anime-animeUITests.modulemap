@@ -1,0 +1,6 @@
+framework module Pods_anime_animeUITests {
+  umbrella header "Pods-anime-animeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
