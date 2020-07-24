@@ -29,10 +29,10 @@ class PlayerUIView: UIView {
         var url =  URL(string: "\(outputDir)quick2.mp4")! //URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
         //    debugPrint(p)
         
-        guard let path = Bundle.main.path(forResource: "slow", ofType:"MOV") else {
-            debugPrint("video.m4v not found")
-            return
-        }
+//        guard let path = Bundle.main.path(forResource: "slow", ofType:"MOV") else {
+//            debugPrint("video.m4v not found")
+//            return
+//        }
         //    MobileFFmpeg.execute("-i \(path) -codec copy \(outputDir)/quick2.mp4")
         //MobileFFmpeg.execute("-i \(path) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -y \(outputDir)quick.MOV")
         
