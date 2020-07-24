@@ -33,7 +33,7 @@ struct ContentView: View {
             DispatchQueue.main.async {
                 if (!message.isEmpty) {
                     self.text = message
-                    //                    debugPrint("==", self.text)
+                    debugPrint("---", self.text)
                 }
                 
             }
@@ -138,8 +138,9 @@ struct ContentView: View {
         
         //-qscale:v 9 加了这个色彩更暗 效果反而差
         //-crf 18: 4090 kb/s 左右
+        // -c:v libx264  需要gpl 版本才支持
         
-        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -preset veryslow -y -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
+        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3150k -preset veryslow -y -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
         
         //        debugPrint("---" +  MobileFFmpegConfig.getLastCommandOutput())
         return Int(ret)

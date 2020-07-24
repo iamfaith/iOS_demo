@@ -60,6 +60,7 @@
 		47E35CB46EA66F2542A56565 /* Pods-anime-animeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anime-animeUITests.debug.xcconfig"; path = "Target Support Files/Pods-anime-animeUITests/Pods-anime-animeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		83D4F822047D8DF5D0DE0419 /* Pods-anime-animeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-anime-animeUITests.release.xcconfig"; path = "Target Support Files/Pods-anime-animeUITests/Pods-anime-animeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8568FDDDF33E5D249D6EAB6D /* Pods-animeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-animeTests.release.xcconfig"; path = "Target Support Files/Pods-animeTests/Pods-animeTests.release.xcconfig"; sourceTree = "<group>"; };
+		8AD8AD2568005B914FE0AACD /* Pods_anime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_anime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3AEF53CC416E1DD8211418 /* Pods_anime_animeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_anime_animeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D18CD93B80E198C0E761E75F /* Pods_animeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_animeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC01FF0024C9EBB7005C9A0C /* anime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "anime-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -221,6 +222,7 @@
 			children = (
 				CD3AEF53CC416E1DD8211418 /* Pods_anime_animeUITests.framework */,
 				D18CD93B80E198C0E761E75F /* Pods_animeTests.framework */,
+				8AD8AD2568005B914FE0AACD /* Pods_anime.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
