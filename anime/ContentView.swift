@@ -24,6 +24,7 @@ struct ContentView: View {
     @State var videos = [Any]()
     static let fileName: String = "quick.mp4"
     let dir = getDocumentsDirectory().appendingPathComponent(fileName)
+    @State private var bitRate: Double = 3150
     
     class FFMPEGLog:NSObject, LogDelegate {
         
@@ -75,6 +76,13 @@ struct ContentView: View {
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10)
                 Text("video info:\(videoInfo?.getInfo() ?? "No information")").padding()
+                
+                if (self.videoInfo != nil) {
+                    VStack {
+                        Slider(value: $bitRate, in: 200...4500, step: 1)
+                        Text("Current bitrate: \(Int(bitRate)) Filesize: \(self.videoInfo!.calculateFileSize(bitRate))")
+                    }
+                }
                 
                 Button(action: {
                     
@@ -141,7 +149,7 @@ struct ContentView: View {
         // -c:v libx264  需要gpl 版本才支持
         
         debugPrint("convert", source)
-        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3150k -preset veryslow -y -v info -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
+        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v \(bitRate)k -preset veryslow -y -v info -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
         
         //        debugPrint("---" +  MobileFFmpegConfig.getLastCommandOutput())
         return Int(ret)

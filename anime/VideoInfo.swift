@@ -50,6 +50,12 @@ struct VideoInfo {
         }
         
     }
+    
+    func calculateFileSize(_ bitRate: Double) -> String{
+        var duration = Double(self.description!.format.duration) ?? 1.0
+        duration = duration * 2.0
+        return String(format:"%.2f", (bitRate + 128) * duration / 1024 / 8) + "MB"
+    }
 }
 
 
