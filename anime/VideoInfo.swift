@@ -31,32 +31,47 @@ struct Description: Codable {
     var format: Format
 }
 
+extension String {
+    var byteSize: String {
+        return ByteCountFormatter().string(fromByteCount: Int64(self)!)
+    }
+}
+
 
 struct VideoInfo {
-    var description: Description
+    var description: Description?
     var videoURL: URL
+    
+    func getInfo() -> String{
+        if let desc = self.description {
+            return "size: " + desc.format.size.byteSize + "\n duration:" + desc.format.duration
+        } else {
+            return String(describing: videoURL)
+        }
+        
+    }
 }
 
 
 class VideoUtil: ObservableObject {
     
     
-    public static func getVideoInfo(_ videoURL: URL) -> Description?{
+    public static func getVideoInfo(_ videoURL: URL) -> VideoInfo{
         let ret = MobileFFprobe.execute("-v quiet -print_format json -show_format -show_streams \(videoURL)")
         if (ret == RETURN_CODE_SUCCESS) {
             let resp = MobileFFmpegConfig.getLastCommandOutput()!
+            //debugPrint("---", resp)
             
-            debugPrint("--resp", resp)
             do {
-                let videoInfo = try JSONDecoder().decode(Description.self, from: (resp ).data(using: .utf8)!)
-                
-                debugPrint("----json", videoInfo)
+                let description = try JSONDecoder().decode(Description.self, from: (resp ).data(using: .utf8)!)
+                debugPrint("----json", description)
+                let videoInfo = VideoInfo(description: description, videoURL: videoURL)
                 return videoInfo
             } catch(let e) {
                 print(e)
             }
         }
-        return nil
+        return VideoInfo(description: nil, videoURL: videoURL)
     }
 }
 

@@ -17,7 +17,7 @@ func getDocumentsDirectory() -> URL {
 struct ContentView: View {
     
     @State var image: Image? = nil
-    @State var videoURL: URL? = nil
+    @State var videoInfo: VideoInfo? = nil
     @State var showCaptureImageView: Bool = false
     @State var text: String = "wait for converting"
     @State var showShareVideo: Bool = false
@@ -58,7 +58,7 @@ struct ContentView: View {
                 CPUWheel().frame(height: 150)
                 Text(self.text).padding().onReceive(timer) { _ in
                     //                    debugPrint("timer", input)
-                    if (!self.log.text.isEmpty) {
+                    if (!self.log.text.isEmpty && self.text != self.log.text) {
                         self.text = self.log.text
                     }
                 }
@@ -74,16 +74,16 @@ struct ContentView: View {
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10)
-                Text("videoURL:\(String(describing: videoURL))").padding()
+                Text("video info:\(videoInfo?.getInfo() ?? "No information")").padding()
                 
                 Button(action: {
                     
-                    if (self.videoURL != nil) {
+                    if (self.videoInfo != nil) {
                         //debugPrint("begin")
                         self.text = "Converting!......"
                         DispatchQueue.global(qos: .background).async {
                             //debugPrint("before convert---")
-                            let ret = self.convertVideo(source: self.videoURL!)
+                            let ret = self.convertVideo(source: self.videoInfo!.videoURL)
                             DispatchQueue.main.async {
                                 if (ret == RETURN_CODE_SUCCESS) {
                                     self.videos.removeAll()
@@ -121,7 +121,7 @@ struct ContentView: View {
                 }
             }
             if (showCaptureImageView) {
-                CaptureImageView(isShown: $showCaptureImageView, image: $image, videoURL: $videoURL)
+                CaptureImageView(isShown: $showCaptureImageView, image: $image, videoInfo: $videoInfo)
             }
             
             //            PlayerView()
@@ -140,7 +140,8 @@ struct ContentView: View {
         //-crf 18: 4090 kb/s 左右
         // -c:v libx264  需要gpl 版本才支持
         
-        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3150k -preset veryslow -y -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
+        debugPrint("convert", source)
+        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3150k -preset veryslow -y -v info -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
         
         //        debugPrint("---" +  MobileFFmpegConfig.getLastCommandOutput())
         return Int(ret)

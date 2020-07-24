@@ -12,12 +12,12 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     
     @Binding var isCoordinatorShown: Bool
     @Binding var imageInCoordinator: Image?
-    @Binding var videoInCoordinator: URL?
+    @Binding var videoInCoordinator: VideoInfo?
     
-    init(isShown: Binding<Bool>, image: Binding<Image?>, videoURL: Binding<URL?>) {
+    init(isShown: Binding<Bool>, image: Binding<Image?>, videoInfo: Binding<VideoInfo?>) {
         _isCoordinatorShown = isShown
         _imageInCoordinator = image
-        _videoInCoordinator = videoURL
+        _videoInCoordinator = videoInfo
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
@@ -26,9 +26,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
         
 //        print("videoURL:\(String(describing: videoURL))")
-        videoInCoordinator = videoURL
-        VideoUtil.getVideoInfo(videoURL)
-        
+        videoInCoordinator = VideoUtil.getVideoInfo(videoURL)
         //     imageInCoordinator = Image(uiImage: unwrapImage)
         isCoordinatorShown = false
     }

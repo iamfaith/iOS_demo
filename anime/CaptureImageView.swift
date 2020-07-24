@@ -13,10 +13,10 @@ struct CaptureImageView {
     /// MARK: - Properties
     @Binding var isShown: Bool
     @Binding var image: Image?
-    @Binding var videoURL: URL?
+    @Binding var videoInfo: VideoInfo?
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(isShown: $isShown, image: $image, videoURL: $videoURL)
+        return Coordinator(isShown: $isShown, image: $image, videoInfo: $videoInfo)
     }
 }
 
