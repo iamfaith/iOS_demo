@@ -22,7 +22,7 @@ struct ContentView: View {
     @State var text: String = "wait for converting"
     @State var showShareVideo: Bool = false
     @State var videos = [Any]()
-    static let fileName: String = "quick.MOV"
+    static let fileName: String = "quick.mp4"
     let dir = getDocumentsDirectory().appendingPathComponent(fileName)
     
     class FFMPEGLog:NSObject, LogDelegate {
@@ -136,7 +136,7 @@ struct ContentView: View {
         
         //        let ret = MobileFFmpeg.execute("-i \(source) -codec copy -y \(getDocumentsDirectory())\(ContentView.fileName)")
         
-        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -y \(getDocumentsDirectory())\(ContentView.fileName)")
+        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -preset veryslow -crf 18 -y -f mp4 \(getDocumentsDirectory())\(ContentView.fileName)")
         
         //        debugPrint("---" +  MobileFFmpegConfig.getLastCommandOutput())
         return Int(ret)
