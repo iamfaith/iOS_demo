@@ -10,5 +10,6 @@
 #define anime_Bridging_Header_h
 
 #import <mobileffmpeg/MobileFFmpeg.h>
+#import <mobileffmpeg/MobileFFprobe.h>
 
 #endif /* anime_Bridging_Header_h */

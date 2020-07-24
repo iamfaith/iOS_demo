@@ -25,8 +25,10 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         //     guard let unwrapImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
         
-        print("videoURL:\(String(describing: videoURL))")
+//        print("videoURL:\(String(describing: videoURL))")
         videoInCoordinator = videoURL
+        VideoUtil.getVideoInfo(videoURL)
+        
         //     imageInCoordinator = Image(uiImage: unwrapImage)
         isCoordinatorShown = false
     }
