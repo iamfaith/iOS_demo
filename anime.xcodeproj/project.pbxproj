@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		D8831171795FAD1C466A9C4D /* Pods_animeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18CD93B80E198C0E761E75F /* Pods_animeTests.framework */; };
-		DC01FEFF24C9E855005C9A0C /* slow.MOV in Resources */ = {isa = PBXBuildFile; fileRef = DC01FEFE24C9E855005C9A0C /* slow.MOV */; };
 		DC01FF0624CA2227005C9A0C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF0524CA2227005C9A0C /* Coordinator.swift */; };
 		DC01FF0824CA2325005C9A0C /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF0724CA2325005C9A0C /* CaptureImageView.swift */; };
 		DC01FF0A24CA23A8005C9A0C /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF0924CA23A8005C9A0C /* PlayerView.swift */; };
+		DC01FF0C24CA342E005C9A0C /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF0B24CA342E005C9A0C /* TextView.swift */; };
+		DC01FF0E24CA36AF005C9A0C /* REPLBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF0D24CA36AF005C9A0C /* REPLBuffer.swift */; };
+		DC01FF1224CA576E005C9A0C /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC01FF1124CA576E005C9A0C /* ShareSheet.swift */; };
 		DCCE111024A5A96C006873A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE110F24A5A96C006873A0 /* AppDelegate.swift */; };
 		DCCE111224A5A96C006873A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE111124A5A96C006873A0 /* SceneDelegate.swift */; };
 		DCCE111424A5A96C006873A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE111324A5A96C006873A0 /* ContentView.swift */; };
@@ -30,6 +32,7 @@
 		DCCE114E24A64EFA006873A0 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE114D24A64EFA006873A0 /* Pie.swift */; };
 		DCCE115024A6577E006873A0 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE114F24A6577E006873A0 /* Cardify.swift */; };
 		DCCE115224A6ACDD006873A0 /* HttpAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE115124A6ACDD006873A0 /* HttpAuth.swift */; };
+		DCF6EC2E24CB46A90089C97C /* CPUWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF6EC2D24CB46A90089C97C /* CPUWheel.swift */; };
 		F76E8BDECC76C2355F081CB1 /* Pods_anime_animeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3AEF53CC416E1DD8211418 /* Pods_anime_animeUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,11 +62,13 @@
 		8568FDDDF33E5D249D6EAB6D /* Pods-animeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-animeTests.release.xcconfig"; path = "Target Support Files/Pods-animeTests/Pods-animeTests.release.xcconfig"; sourceTree = "<group>"; };
 		CD3AEF53CC416E1DD8211418 /* Pods_anime_animeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_anime_animeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D18CD93B80E198C0E761E75F /* Pods_animeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_animeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC01FEFE24C9E855005C9A0C /* slow.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = slow.MOV; path = assets/slow.MOV; sourceTree = "<group>"; };
 		DC01FF0024C9EBB7005C9A0C /* anime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "anime-Bridging-Header.h"; sourceTree = "<group>"; };
 		DC01FF0524CA2227005C9A0C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		DC01FF0724CA2325005C9A0C /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		DC01FF0924CA23A8005C9A0C /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		DC01FF0B24CA342E005C9A0C /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		DC01FF0D24CA36AF005C9A0C /* REPLBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REPLBuffer.swift; sourceTree = "<group>"; };
+		DC01FF1124CA576E005C9A0C /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		DCCE110C24A5A96C006873A0 /* anime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = anime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCCE110F24A5A96C006873A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCCE111124A5A96C006873A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +93,7 @@
 		DCCE114D24A64EFA006873A0 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		DCCE114F24A6577E006873A0 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		DCCE115124A6ACDD006873A0 /* HttpAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpAuth.swift; sourceTree = "<group>"; };
+		DCF6EC2D24CB46A90089C97C /* CPUWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUWheel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,19 +136,10 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		DC01FEFD24C9E7CF005C9A0C /* assets */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
 		DCCE110324A5A96C006873A0 = {
 			isa = PBXGroup;
 			children = (
 				DC01FF0024C9EBB7005C9A0C /* anime-Bridging-Header.h */,
-				DC01FEFE24C9E855005C9A0C /* slow.MOV */,
-				DC01FEFD24C9E7CF005C9A0C /* assets */,
 				DCCE110E24A5A96C006873A0 /* anime */,
 				DCCE112524A5A971006873A0 /* animeTests */,
 				DCCE113024A5A971006873A0 /* animeUITests */,
@@ -165,6 +162,7 @@
 		DCCE110E24A5A96C006873A0 /* anime */ = {
 			isa = PBXGroup;
 			children = (
+				DC01FF1124CA576E005C9A0C /* ShareSheet.swift */,
 				DC01FF0924CA23A8005C9A0C /* PlayerView.swift */,
 				DC01FF0524CA2227005C9A0C /* Coordinator.swift */,
 				DCCE113F24A5AA53006873A0 /* Array+Identifiable.swift */,
@@ -180,11 +178,14 @@
 				DCCE110F24A5A96C006873A0 /* AppDelegate.swift */,
 				DCCE111124A5A96C006873A0 /* SceneDelegate.swift */,
 				DCCE111324A5A96C006873A0 /* ContentView.swift */,
+				DC01FF0D24CA36AF005C9A0C /* REPLBuffer.swift */,
 				DC01FF0724CA2325005C9A0C /* CaptureImageView.swift */,
 				DCCE111524A5A971006873A0 /* Assets.xcassets */,
 				DCCE111A24A5A971006873A0 /* LaunchScreen.storyboard */,
 				DCCE111D24A5A971006873A0 /* Info.plist */,
 				DCCE111724A5A971006873A0 /* Preview Content */,
+				DC01FF0B24CA342E005C9A0C /* TextView.swift */,
+				DCF6EC2D24CB46A90089C97C /* CPUWheel.swift */,
 			);
 			path = anime;
 			sourceTree = "<group>";
@@ -335,7 +336,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC01FEFF24C9E855005C9A0C /* slow.MOV in Resources */,
 				DCCE111C24A5A971006873A0 /* LaunchScreen.storyboard in Resources */,
 				DCCE111924A5A971006873A0 /* Preview Assets.xcassets in Resources */,
 				DCCE111624A5A971006873A0 /* Assets.xcassets in Resources */,
@@ -511,10 +511,14 @@
 				DCCE115024A6577E006873A0 /* Cardify.swift in Sources */,
 				DCCE115224A6ACDD006873A0 /* HttpAuth.swift in Sources */,
 				DCCE111224A5A96C006873A0 /* SceneDelegate.swift in Sources */,
+				DC01FF0C24CA342E005C9A0C /* TextView.swift in Sources */,
+				DC01FF0E24CA36AF005C9A0C /* REPLBuffer.swift in Sources */,
 				DCCE111424A5A96C006873A0 /* ContentView.swift in Sources */,
 				DCCE114E24A64EFA006873A0 /* Pie.swift in Sources */,
 				DCCE114824A5AA53006873A0 /* EmojiMemoryGame.swift in Sources */,
+				DC01FF1224CA576E005C9A0C /* ShareSheet.swift in Sources */,
 				DCCE114A24A5AA53006873A0 /* GridLayout.swift in Sources */,
+				DCF6EC2E24CB46A90089C97C /* CPUWheel.swift in Sources */,
 				DC01FF0824CA2325005C9A0C /* CaptureImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

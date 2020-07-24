@@ -136,7 +136,10 @@ struct ContentView: View {
         
         //        let ret = MobileFFmpeg.execute("-i \(source) -codec copy -y \(getDocumentsDirectory())\(ContentView.fileName)")
         
-        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -qscale:v 9 -preset veryslow -crf 18 -y -f mp4 \(getDocumentsDirectory())\(ContentView.fileName)")
+        //-qscale:v 9 加了这个色彩更暗 效果反而差
+        //-crf 18: 4090 kb/s 左右
+        
+        let ret = MobileFFmpeg.execute("-i \(source) -filter_complex \"[0:v]setpts=2.0*PTS,minterpolate='mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=60'[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" -b:v 3800k -preset veryslow -y -f mp4 -c:v libx264 -b:a 128k \(getDocumentsDirectory())\(ContentView.fileName)")
         
         //        debugPrint("---" +  MobileFFmpegConfig.getLastCommandOutput())
         return Int(ret)
