@@ -1,16 +1,16 @@
 PODS:
-  - mobile-ffmpeg-full (4.3.2)
+  - mobile-ffmpeg-full-gpl (4.3.2)
 
 DEPENDENCIES:
-  - mobile-ffmpeg-full (~> 4.3.2)
+  - mobile-ffmpeg-full-gpl (~> 4.3.2)
 
 SPEC REPOS:
   trunk:
-    - mobile-ffmpeg-full
+    - mobile-ffmpeg-full-gpl
 
 SPEC CHECKSUMS:
-  mobile-ffmpeg-full: 5ff7bf33f70c7c89bba663e213f0d5a1ba8ddb84
+  mobile-ffmpeg-full-gpl: ce51d476b7ff03ad67a58e2c95ab9100553d1a54
 
-PODFILE CHECKSUM: b3b523bcef02036925179c854c370e72eaeaa1d4
+PODFILE CHECKSUM: 34a25fdba82b58980afce5e9617c708c65988bb8
 
 COCOAPODS: 1.9.3
