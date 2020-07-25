@@ -23,7 +23,10 @@ struct ContentView: View {
     @State var showShareVideo: Bool = false
     @State var videos = [Any]()
     static let fileName: String = "quick.mp4"
+    static let originalSoundName: String = "quick_origin_sound.mp4"
+    static let sound: String = "quick.wav"
     let dir = getDocumentsDirectory().appendingPathComponent(fileName)
+    let originSoundDir = getDocumentsDirectory().appendingPathComponent(originalSoundName)
     @State private var bitRate: Double = 3150
     
     class FFMPEGLog:NSObject, LogDelegate {
@@ -51,6 +54,25 @@ struct ContentView: View {
     
     
     //    let videoProcessingQueue = DispatchQueue(label: "video-processing")
+    fileprivate func shareVideo(_ ret: Int, _ dir: URL) {
+        DispatchQueue.main.async {
+            if (ret == RETURN_CODE_SUCCESS) {
+                self.videos.removeAll()
+                self.videos.append(dir)
+                self.showShareVideo = true
+                self.text = "Converted!!Pls Save"
+            } else {
+                self.text = "Convert failed"
+            }
+            
+            //                                var filesToShare = [Any]()
+            //                                filesToShare.append(dir)
+            //                                let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
+            //                                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+            
+        }
+    }
+    
     var body: some View {
         
         ZStack {
@@ -92,24 +114,7 @@ struct ContentView: View {
                         DispatchQueue.global(qos: .background).async {
                             //debugPrint("before convert---")
                             let ret = self.convertVideo(source: self.videoInfo!.videoURL)
-                            DispatchQueue.main.async {
-                                if (ret == RETURN_CODE_SUCCESS) {
-                                    self.videos.removeAll()
-                                    self.videos.append(self.dir)
-                                    self.showShareVideo = true
-                                    self.text = "Converted!!Pls Save"
-                                } else {
-                                    self.text = "Convert failed"
-                                }
-                                
-                                //                                var filesToShare = [Any]()
-                                //                                filesToShare.append(dir)
-                                //                                let av = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
-                                //                                UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
-                                
-                                
-                                
-                            }
+                            self.shareVideo(ret, self.dir)
                             
                         }
                         
@@ -118,6 +123,32 @@ struct ContentView: View {
                 }) {
                     Text("Slow Motion")
                 }
+                
+                Button(action: {
+                    if (self.videoInfo != nil) {
+                        self.text = "Extract Original Sound!......"
+                        let ret = MobileFFmpeg.execute("-i \(self.videoInfo!.videoURL) -y \(getDocumentsDirectory())\(ContentView.sound)")
+                        if (ret  == RETURN_CODE_SUCCESS) {
+                            DispatchQueue.global(qos: .background).async {
+                             //ffmpeg -i v.mp4 -i a.wav -c:v copy -map 0:v:0 -map 1:a:0 -shortest new.mp4
+                                let ret = MobileFFmpeg.execute("-i \(getDocumentsDirectory())\(ContentView.fileName) -i \(getDocumentsDirectory())\(ContentView.sound) -c:v copy -map 0:v:0 -map 1:a:0 -v info -shortest -y \(getDocumentsDirectory())\(ContentView.originalSoundName)")
+                                
+                                self.shareVideo(Int(ret), self.originSoundDir)
+                            }
+                        }
+                        do {
+                            let fileList = try FileManager.default.contentsOfDirectory(at: getDocumentsDirectory(), includingPropertiesForKeys: nil)
+                            debugPrint(fileList)
+
+                        } catch {
+                            print("Error while enumerating files")
+                        }
+                    }
+                    
+                }) {
+                    Text("Add origin sound")
+                }
+                
                 
                 Button(action: {
                     self.videos.removeAll()
